@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Classement Speedrun</title>
+</head>
+<body>
+
+<h1>🏆 Classement Speedrun</h1>
+<a href="/submit">Soumettre un run</a>
+
+<table border="1">
+<tr><th>Pseudo</th><th>Temps</th></tr>
+{% for run in runs %}
+<tr>
+<td>{{ run[0] }}</td>
+<td>{{ run[1] }}</td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<h1>Validation des runs</h1>
+
+<table border="1">
+<tr><th>Pseudo</th><th>Temps</th><th>Action</th></tr>
+{% for run in runs %}
+<tr>
+<td>{{ run[1] }}</td>
+<td>{{ run[2] }}</td>
+<td>
+<a href="/validate/{{ run[0] }}">Valider</a>
+<a href="/reject/{{ run[0] }}">Refuser</a>
+</td>
+</tr>
+{% endfor %}
+</table>python

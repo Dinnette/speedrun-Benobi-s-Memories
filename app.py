@@ -91,9 +91,16 @@ def admin():
 def validate(id):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute("UPDATE runs SET statut='valide' WHERE id=?", (id,))
+
+    c.execute(
+        "UPDATE runs SET statut='valide' WHERE id=%s",
+        (id,)
+    )
+
     conn.commit()
+    c.close()
     conn.close()
+
     return redirect('/admin')
 
 # --- REFUSER ---
@@ -101,9 +108,16 @@ def validate(id):
 def reject(id):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute("DELETE FROM runs WHERE id=?", (id,))
+
+    c.execute(
+        "DELETE FROM runs WHERE id=%s",
+        (id,)
+    )
+
     conn.commit()
+    c.close()
     conn.close()
+
     return redirect('/admin')
 
 # --- SUPPRIMER ---
@@ -111,9 +125,16 @@ def reject(id):
 def delete(id):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute("DELETE FROM runs WHERE id=?", (id,))
+
+    c.execute(
+        "DELETE FROM runs WHERE id=%s",
+        (id,)
+    )
+
     conn.commit()
+    c.close()
     conn.close()
+
     return redirect('/admin')
 
 if __name__ == '__main__':

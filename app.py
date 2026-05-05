@@ -29,7 +29,7 @@ init_db()
 # --- HOME (classement validé) ---
 @app.route('/')
 def index():
-    conn = sqlite3.connect('runs.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("SELECT pseudo, temps FROM runs WHERE statut='valide' ORDER BY temps ASC")
     runs = c.fetchall()
@@ -43,7 +43,7 @@ def submit():
         pseudo = request.form['pseudo']
         temps = request.form['temps']
 
-        conn = sqlite3.connect('runs.db')
+        conn = get_db_connection()
         c = conn.cursor()
         c.execute("INSERT INTO runs (pseudo, temps, statut) VALUES (?, ?, 'en_attente')", (pseudo, temps))
         conn.commit()
@@ -68,7 +68,7 @@ def admin():
     if not session.get('admin'):
         return redirect('/login')
 
-    conn = sqlite3.connect('runs.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("SELECT * FROM runs WHERE statut='en_attente'")
     pending = c.fetchall()
@@ -83,7 +83,7 @@ def admin():
 # --- VALIDER ---
 @app.route('/validate/<int:id>')
 def validate(id):
-    conn = sqlite3.connect('runs.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("UPDATE runs SET statut='valide' WHERE id=?", (id,))
     conn.commit()
@@ -93,7 +93,7 @@ def validate(id):
 # --- REFUSER ---
 @app.route('/reject/<int:id>')
 def reject(id):
-    conn = sqlite3.connect('runs.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("DELETE FROM runs WHERE id=?", (id,))
     conn.commit()
@@ -103,7 +103,7 @@ def reject(id):
 # --- SUPPRIMER ---
 @app.route('/delete/<int:id>')
 def delete(id):
-    conn = sqlite3.connect('runs.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("DELETE FROM runs WHERE id=?", (id,))
     conn.commit()

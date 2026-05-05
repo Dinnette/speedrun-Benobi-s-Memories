@@ -45,8 +45,14 @@ def submit():
 
         conn = get_db_connection()
         c = conn.cursor()
-        c.execute("INSERT INTO runs (pseudo, temps, statut) VALUES (?, ?, 'en_attente')", (pseudo, temps))
+
+        c.execute(
+            "INSERT INTO runs (pseudo, temps, statut) VALUES (%s, %s, %s)",
+            (pseudo, temps, 'en_attente')
+        )
+
         conn.commit()
+        c.close()
         conn.close()
 
         return redirect('/')
